@@ -29,6 +29,7 @@ public class TestBeanFactory {
         defaultListableBeanFactory.registerBeanDefinition("helloWorldBean",helloWorldBeanDefinition);
         HelloWorldBean helloWorldBean = (HelloWorldBean)defaultListableBeanFactory.getBean("helloWorldBean");
         Assert.assertEquals(helloWorldBean.hello(),"HelloWorldBean.hello");
+        helloWorldBean.hello();
     }
 
 }
