@@ -1,15 +1,13 @@
-package org.sunhb;
+package org.sunhb.service;
 
 /**
  * @author: SunHB
- * @createTime: 2023/12/25 下午10:15
+ * @createTime: 2023/12/26 下午8:17
  * @description:
  */
-public class HelloWorldBean {
-
+public class HelloWorldService {
     public String hello(){
         //System.out.println("HelloWorldBean.hello");
         return "HelloWorldBean.hello";
     }
-
 }
