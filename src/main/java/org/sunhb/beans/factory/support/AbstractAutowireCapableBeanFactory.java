@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import org.sunhb.beans.BeanException;
 import org.sunhb.beans.PropertyValue;
 import org.sunhb.beans.factory.config.BeanDefinition;
+import org.sunhb.beans.factory.config.BeanReference;
 
 /**
  * @author: SunHB
@@ -12,7 +13,7 @@ import org.sunhb.beans.factory.config.BeanDefinition;
  */
 abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
 
-    private InstantiationStrategy instantiationStrategy = new CglibSubClassingInstatiationStrategy();
+    private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefiniton) throws BeanException {
         return doCreateBean(beanName,beanDefiniton);
@@ -47,7 +48,10 @@ abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
             for (PropertyValue propertyValue : beanDefinition.getPropertyValues().getPropertyValueList()) {
                 String name = propertyValue.getName();
                 Object value = propertyValue.getValue();
-
+                if(value instanceof BeanReference){
+                    BeanReference beanReference =(BeanReference)value;
+                    value = getBean(beanReference.getBeanName());
+                }
                 //通过反射设置属性
                 BeanUtil.setFieldValue(bean, name, value);
             }

@@ -3,10 +3,12 @@ package org.sunhb;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.sunhb.bean.Person;
+import org.sunhb.bean.Plane;
 import org.sunhb.beans.BeanException;
 import org.sunhb.beans.PropertyValue;
 import org.sunhb.beans.PropertyValues;
 import org.sunhb.beans.factory.config.BeanDefinition;
+import org.sunhb.beans.factory.config.BeanReference;
 import org.sunhb.beans.factory.support.DefaultListableBeanFactory;
 import org.sunhb.service.HelloWorldService;
 
@@ -29,5 +31,34 @@ public class BeanWithPropertyValuesTest {
         Assertions.assertNotNull(person);
         Assertions.assertEquals(person.getAge(),18);
         Assertions.assertEquals(person.getName(),"helloWorld");
+    }
+
+    @Test
+    public void testPopulateBeanWithBean() throws Exception {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        //注册Plane实例
+        PropertyValues propertyValuesForPlane = new PropertyValues();
+        propertyValuesForPlane.addPropertyValue(new PropertyValue("nation", "CN"));
+        BeanDefinition planeBeanDefinition = new BeanDefinition(Plane.class, propertyValuesForPlane);
+        beanFactory.registerBeanDefinition("plane", planeBeanDefinition);
+
+        //注册Person实例
+        PropertyValues propertyValuesForPerson = new PropertyValues();
+        propertyValuesForPerson.addPropertyValue(new PropertyValue("name", "derek"));
+        propertyValuesForPerson.addPropertyValue(new PropertyValue("age", 18));
+        //Person实例依赖Car实例
+        propertyValuesForPerson.addPropertyValue(new PropertyValue("plane", new BeanReference("plane")));
+        BeanDefinition beanDefinition = new BeanDefinition(Person.class, propertyValuesForPerson);
+        beanFactory.registerBeanDefinition("person", beanDefinition);
+
+        Person person = (Person) beanFactory.getBean("person");
+        System.out.println(person);
+        Assertions.assertEquals(person.getName(),"derek");
+        Assertions.assertEquals(person.getAge(),18);
+        Plane plane = person.getPlane();
+        Assertions.assertNotNull(plane);
+        //assertThat(car).isNotNull();
+        //assertThat(car.getBrand()).isEqualTo("porsche");
     }
 }

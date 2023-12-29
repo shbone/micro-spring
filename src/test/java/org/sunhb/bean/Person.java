@@ -5,7 +5,7 @@ package org.sunhb.bean;
  * @date 2020/11/24
  */
 public class Person {
-
+	private Plane plane;
 	private String name;
 
 	private int age;
@@ -24,6 +24,10 @@ public class Person {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public Plane getPlane() {
+		return plane;
 	}
 
 	@Override
