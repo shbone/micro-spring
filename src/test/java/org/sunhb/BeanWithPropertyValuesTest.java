@@ -47,7 +47,7 @@ public class BeanWithPropertyValuesTest {
         PropertyValues propertyValuesForPerson = new PropertyValues();
         propertyValuesForPerson.addPropertyValue(new PropertyValue("name", "derek"));
         propertyValuesForPerson.addPropertyValue(new PropertyValue("age", 18));
-        //Person实例依赖Car实例
+        //Person实例依赖Plane实例
         propertyValuesForPerson.addPropertyValue(new PropertyValue("plane", new BeanReference("plane")));
         BeanDefinition beanDefinition = new BeanDefinition(Person.class, propertyValuesForPerson);
         beanFactory.registerBeanDefinition("person", beanDefinition);
@@ -59,6 +59,7 @@ public class BeanWithPropertyValuesTest {
         Plane plane = person.getPlane();
         Assertions.assertNotNull(plane);
         //assertThat(car).isNotNull();
+        Assertions.assertEquals(plane.getNation(),"CN");
         //assertThat(car.getBrand()).isEqualTo("porsche");
     }
 }
