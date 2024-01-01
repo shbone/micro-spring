@@ -10,7 +10,6 @@ import org.sunhb.beans.PropertyValues;
 import org.sunhb.beans.factory.config.BeanDefinition;
 import org.sunhb.beans.factory.config.BeanReference;
 import org.sunhb.beans.factory.support.DefaultListableBeanFactory;
-import org.sunhb.service.HelloWorldService;
 
 /**
  * @author: SunHB
@@ -23,14 +22,14 @@ public class BeanWithPropertyValuesTest {
     public void testBeanWithPropertyValues() throws BeanException {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         PropertyValues propertyValues = new PropertyValues();
-        propertyValues.addPropertyValue(new PropertyValue("name","helloWorld"));
+        propertyValues.addPropertyValue(new PropertyValue("name", "helloWorld.txt"));
         propertyValues.addPropertyValue(new PropertyValue("age",18));
         BeanDefinition beanDefinition = new BeanDefinition(Person.class,propertyValues);
         beanFactory.registerBeanDefinition("person",beanDefinition);
         Person person = (Person)beanFactory.getBean("person");
         Assertions.assertNotNull(person);
         Assertions.assertEquals(person.getAge(),18);
-        Assertions.assertEquals(person.getName(),"helloWorld");
+        Assertions.assertEquals(person.getName(), "helloWorld.txt");
     }
 
     @Test
