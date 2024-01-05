@@ -30,6 +30,10 @@ public class Person {
 		return plane;
 	}
 
+	public void setPlane(Plane plane) {
+		this.plane = plane;
+	}
+
 	@Override
 	public String toString() {
 		return "Person{" +

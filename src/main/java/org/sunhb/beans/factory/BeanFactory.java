@@ -17,4 +17,15 @@ public interface BeanFactory {
      * @return java.lang.Object
      **/
     Object getBean(String name) throws BeanException;
+
+    /**
+     * @Author sunhb
+     * @Description 根据名称和类型找bean
+     * @Date 2024/1/5 上午12:09
+     * @Param
+     * @param name
+     * @param reuqiredType
+     * @return T
+     **/
+    <T> T getBean(String name,Class<T> reuqiredType) throws BeanException;
 }

@@ -5,7 +5,7 @@ package org.sunhb.beans;
  * @createTime: 2023/12/23 下午9:51
  * @description:
  */
-public class BeanException extends Exception {
+public class BeanException extends RuntimeException {
     public BeanException(String message) {
         super(message);
     }
