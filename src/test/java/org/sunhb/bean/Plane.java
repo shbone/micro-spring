@@ -11,7 +11,7 @@ public class Plane {
     //public Plane(String nation) {
     //    this.nation = nation;
     //}
-
+    private String brand;
     public String getNation() {
         return nation;
     }
@@ -20,10 +20,19 @@ public class Plane {
         this.nation = nation;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     @Override
     public String toString() {
         return "Plane{" +
                 "nation='" + nation + '\'' +
+                ", brand='" + brand + '\'' +
                 '}';
     }
 }

@@ -15,5 +15,6 @@
 
     <bean id="plane" class="org.sunhb.bean.Plane">
         <property name="nation" value="CN"/>
+        <property name="brand" value="BMW"/>
     </bean>
 </beans>

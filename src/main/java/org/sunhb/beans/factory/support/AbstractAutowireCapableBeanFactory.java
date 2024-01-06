@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import org.sunhb.beans.BeanException;
 import org.sunhb.beans.PropertyValue;
 import org.sunhb.beans.factory.config.BeanDefinition;
+import org.sunhb.beans.factory.config.BeanPostProcessor;
 import org.sunhb.beans.factory.config.BeanReference;
 
 /**
@@ -27,11 +28,44 @@ abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
             //bean添加属性
             applyPropertyValues(beanName,bean,beanDefinition);
             //bean = beanClass.newInstance();
+            InitializeBean(beanName,bean,beanDefinition);
         } catch (Exception e){
             throw new BeanException("Instantiation of bean failed",e);
         }
         addSingletonBeanMap(beanName,bean);
         return bean;
+    }
+
+    protected Object InitializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        // 执行bean BeanPostProcessor前处理
+        Object wrappedBean =applyBeanPostProcessorsBeforeInitialization(bean,beanName);
+         //TODO:bean初始化方法
+         invokeInitMethods(beanName,wrappedBean,beanDefinition);
+         //执行bean BeanPostProcessor后处理
+         wrappedBean = applyBeanPostProcessorsAfterInitialization(bean,beanName);
+
+         return wrappedBean;
+    }
+
+    private Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName) {
+        Object current = existingBean;
+        for(BeanPostProcessor beanPostProcessor:getBeanPostProcessorList() ){
+            current = beanPostProcessor.postProcessBeanAfterInitilization(existingBean,beanName);
+        }
+        return current;
+    }
+
+    private Object applyBeanPostProcessorsBeforeInitialization(Object bean, String beanName) {
+        Object current = bean;
+        for(BeanPostProcessor beanPostProcessor:getBeanPostProcessorList()){
+             current =beanPostProcessor.postProcessBeanBeforeInitilization(bean,beanName);
+        }
+        return current;
+    }
+
+    protected void invokeInitMethods(String beanName, Object bean, BeanDefinition beanDefinition) {
+        //TODO 后面会实现
+        System.out.println("执行bean[" + beanName + "]的初始化方法");
     }
     /**
      * @Author sunhb
@@ -59,6 +93,8 @@ abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
             throw new BeanException("Error setting property values for bean: " + beanName, ex);
         }
     }
+
+
 
     protected Object createBeanInstance(BeanDefinition beanDefiniton) throws BeanException {
         return getInstantiationStrategy().instantiate(beanDefiniton);

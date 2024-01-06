@@ -3,6 +3,7 @@ package org.sunhb.beans.factory;
 import org.sunhb.beans.BeanException;
 import org.sunhb.beans.factory.config.AutowireCapableBeanFactory;
 import org.sunhb.beans.factory.config.BeanDefinition;
+import org.sunhb.beans.factory.config.BeanPostProcessor;
 import org.sunhb.beans.factory.config.ConfigrableBeanFacory;
 
 /**
@@ -21,4 +22,6 @@ public interface ConfigurableListableBeanFactory
      * @return org.sunhb.beans.factory.config.BeanDefinition
      **/
     BeanDefinition getBeanDefinition(String beanName)throws BeanException;
+
+    void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 }

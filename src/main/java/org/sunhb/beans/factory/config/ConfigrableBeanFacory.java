@@ -8,4 +8,6 @@ import org.sunhb.beans.factory.HierarchicalBeanFactory;
  * @description:
  */
 public interface ConfigrableBeanFacory extends HierarchicalBeanFactory,SingletonBeanRegister {
+
+    void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 }
