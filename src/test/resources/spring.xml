@@ -17,4 +17,7 @@
         <property name="nation" value="CN"/>
         <property name="brand" value="BMW"/>
     </bean>
+
+    <bean id="CustomBeanFactoryPostProcessor" class="org.sunhb.common.CustomBeanFactoryPostProcessor"/>
+    <bean id="CustomBeanPostProcessor" class="org.sunhb.common.CustomBeanPostProcessor"/>
 </beans>

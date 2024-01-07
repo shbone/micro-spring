@@ -28,6 +28,7 @@ abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
             //bean添加属性
             applyPropertyValues(beanName,bean,beanDefinition);
             //bean = beanClass.newInstance();
+            //初始化bean
             InitializeBean(beanName,bean,beanDefinition);
         } catch (Exception e){
             throw new BeanException("Instantiation of bean failed",e);

@@ -24,4 +24,6 @@ public interface ConfigurableListableBeanFactory
     BeanDefinition getBeanDefinition(String beanName)throws BeanException;
 
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
+
+    void preInstantiateSingletons()throws BeanException;
 }
