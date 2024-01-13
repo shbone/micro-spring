@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @author: SunHB
  * @createTime: 2024/01/04 上午12:40
- * @description:
+ * @description: 获取beanFactory相关信心
  */
 public interface ListableBeanFactory extends BeanFactory{
     /**

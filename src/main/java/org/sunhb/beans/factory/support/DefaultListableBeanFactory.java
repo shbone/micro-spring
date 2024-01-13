@@ -65,4 +65,9 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     public String[] getBeanDefinitionNames() {
         return new String[0];
     }
+    //TODO: destroySingletons 那里继承的？？？
+    //@Override
+    //public void destroySingletons() {
+    //
+    //}
 }

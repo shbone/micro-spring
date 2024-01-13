@@ -1,10 +1,14 @@
 package org.sunhb.bean;
 
+import org.sunhb.beans.BeanException;
+import org.sunhb.beans.factory.DisposableBean;
+import org.sunhb.beans.factory.InitializingBean;
+
 /**
  * @author derekyi
  * @date 2020/11/24
  */
-public class Person {
+public class Person implements InitializingBean, DisposableBean {
 	private Plane plane;
 	private String name;
 
@@ -40,5 +44,21 @@ public class Person {
 				"name='" + name + '\'' +
 				", age=" + age +
 				'}';
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		System.out.println("I was born in the method named Person.afterPropertiesSet");
+	}
+	public void customDestroyMethod(){
+		System.out.println("I destroyed in the method named Person.customDestroyMethod");
+	}
+
+	public void customInitMethod(){
+		System.out.println("I inited in the method named Person.customInitMethod");
+	}
+	@Override
+	public void destroy() throws BeanException {
+		System.out.println("I destroyed in the method named destroy");
 	}
 }
