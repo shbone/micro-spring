@@ -1,4 +1,4 @@
-package org.sunhb;
+package org.sunhb.ioc;
 
 import junit.framework.Assert;
 import org.junit.jupiter.api.Test;

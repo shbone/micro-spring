@@ -1,4 +1,4 @@
-package org.sunhb;
+package org.sunhb.ioc;
 
 import org.junit.jupiter.api.Test;
 import org.sunhb.bean.Person;

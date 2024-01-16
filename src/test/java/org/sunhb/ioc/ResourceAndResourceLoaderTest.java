@@ -1,4 +1,4 @@
-package org.sunhb;
+package org.sunhb.ioc;
 
 import cn.hutool.core.io.IoUtil;
 import org.junit.jupiter.api.Assertions;
