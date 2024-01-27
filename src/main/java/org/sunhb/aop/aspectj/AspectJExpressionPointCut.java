@@ -24,7 +24,7 @@ public class AspectJExpressionPointCut implements ClassFilter, MethodMatcher, Po
         SUPPORT_PRIMITIVES.add(PointcutPrimitive.EXECUTION);
     }
 
-    private static PointcutExpression pointcutExpression;
+    private final PointcutExpression pointcutExpression;
 
     public AspectJExpressionPointCut(String expression) {
         //TODO: 理解pointCut 的注入
