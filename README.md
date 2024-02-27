@@ -26,3 +26,18 @@ public class TestBeanFactory {
 
 }
 ```
+
+> 分支名称：instantiation-strategy
+
+bean = beanClass.newInstance(); 仅适用无参构造bean的情况，需要完善实例化策略
+
+![instantiation实例化接口实现](./asset/pics/instantiation-strategy_1.png)
+
+主要增加如下类：
+抽象出一个bean实例化策略的接口InstantiationStrategy，有两个实现类
+- SimpleInstantiationStrategy，通过构造函数的方式进行实例化
+- CglibSubClassingInstatiationStrategy，通过Cglib动态代理实现子类
+
+
+
+
