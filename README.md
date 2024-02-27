@@ -131,4 +131,40 @@ public class BeanWithPropertyValuesTest {
 ```
 
 ## 资源和资源加载器
-> 分支名称：
+> 分支名称：resource-and-resource-loader
+
+![resouce接口实现](./asset/pics/micro-resource.png)
+- 新增 资源加载器ResourceLoader和资源的抽象和访问接口Resource 两个接口
+- ClassPathResource 类路径下资源获取
+- FileSystemResource 系统文件资源获取
+- URLResource 网络资源获取
+  DefaultResourceLoader 资源加载器默认实现类
+
+```java
+public class ResourceAndResourceLoaderTest {
+    @Test
+    public void testResourceLoader() throws IOException {
+        DefaultResourceLoader defaultResourceLoader = new DefaultResourceLoader();
+        // 加载classpath下的资源，classpath读取 resources文件夹下的文件
+        Resource resource = defaultResourceLoader.getResource("classpath:testMain.txt");
+        InputStream inputStream = resource.getInputStream();
+        String readUtf8 = IoUtil.readUtf8(inputStream);
+        System.out.println(readUtf8);
+
+        //加载网络URL资源
+        Resource urlResource = defaultResourceLoader.getResource("https://www.baidu.com");
+        Assertions.assertInstanceOf(URLResource.class,urlResource,"加载结果类型错误...");
+        InputStream urlResourceInputStream = urlResource.getInputStream();
+        String urlStream = IoUtil.readUtf8(urlResourceInputStream);
+        System.out.println(urlStream);
+
+        //加载系统文件
+        Resource fsResource = defaultResourceLoader.getResource("src/test/java/org/sunhb/testPath.java");
+        Assertions.assertInstanceOf(FileSystemResource.class,fsResource,"加载结果类型错误...");
+        InputStream fsResourceInputStream = fsResource.getInputStream();
+        String readUtf81 = IoUtil.readUtf8(fsResourceInputStream);
+        System.out.println(readUtf81);
+
+    }
+}
+```
