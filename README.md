@@ -38,6 +38,28 @@ bean = beanClass.newInstance(); 仅适用无参构造bean的情况，需要完�
 - SimpleInstantiationStrategy，通过构造函数的方式进行实例化
 - CglibSubClassingInstatiationStrategy，通过Cglib动态代理实现子类
 
+> 分支名称：decorate-bean-with-property-values 
 
+BeanDefinition 中添加对应bean属性的PropertyValues 成员变量
+PropertyValue 包括 name和value 两个属性
+```java
+public class BeanWithPropertyValuesTest {
+
+    @Test
+    public void testBeanWithPropertyValues() throws BeanException {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        PropertyValues propertyValues = new PropertyValues();
+        propertyValues.addPropertyValue(new PropertyValue("name","helloWorld"));
+        propertyValues.addPropertyValue(new PropertyValue("age",18));
+        BeanDefinition beanDefinition = new BeanDefinition(Person.class,propertyValues);
+        beanFactory.registerBeanDefinition("person",beanDefinition);
+        Person person = (Person)beanFactory.getBean("person");
+        Assertions.assertNotNull(person);
+        Assertions.assertEquals(person.getAge(),18);
+        Assertions.assertEquals(person.getName(),"helloWorld");
+    }
+}
+
+```
 
 
