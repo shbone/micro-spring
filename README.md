@@ -168,3 +168,64 @@ public class ResourceAndResourceLoaderTest {
     }
 }
 ```
+
+
+## XML中定义bean
+
+> 分支名称：xml-define-bean
+
+![DefaultListableBeanFactory类的层次结构图](asset/pics/micro-xml-define-bean.png)
+
+xml中显式定义bean的信息，resourceloader加载xml文件，解析出bean信息后，加载进bean容器中
+
+BeanDefinitionReader 是bean定义的读取接口，可以读取bean定义资源，包含ResourceLoader接口，AbstractBeanDefinitionReader 是BeanDefinitionReader的抽象实现类
+XmlBeanDefinitionReader 是xml文件中读取bean的实现类。同时，BeanDefinitionReader 应该能够向容器中注入 BeanDefinition,
+包含 BeanDefinitionRegister 接口。AbstractBeanDefinitionReader包含BeanDefinitionRegister 和 ResourceLoader 两个接口，是BeanDefinitionReader的抽象实现类。
+
+```text
+public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader {
+
+    private final  BeanDefinitionRegister register;
+
+    private ResourceLoader resourceLoader;
+}
+```
+xml文件定义bean
+```yaml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	         http://www.springframework.org/schema/beans/spring-beans.xsd
+		 http://www.springframework.org/schema/context
+		 http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <bean id="person" class="org.sunhb.bean.Person">
+        <property name="name" value="sunhb"/>
+        <property name="plane" ref="plane"/>
+        <property name="age" value="18"/>
+    </bean>
+
+    <bean id="plane" class="org.sunhb.bean.Plane">
+        <property name="nation" value="CN"/>
+    </bean>
+</beans>
+```
+测试示例
+```java
+public class XMLFileDefineBeanTest {
+    @Test
+    public void testXmlFile(){
+        //构建beanFactory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+        beanDefinitionReader.loadBeanDefinitions("classpath:spring.xml");
+
+        Person person = (Person)beanFactory.getBean("person");
+        System.out.println(person);
+    }
+}
+
+```
+
